@@ -1,0 +1,66 @@
+
+hdprojects build cmd
+========================================
+1.make all
+编译所有工程, lib及user目录下所有工程, 结果保存在install目录
+
+2.make clean
+clean lib及user目录下的工程
+
+3.make install
+安装 lib及user目录下的结果文件到install目录
+
+4.make distclean
+clean lib及user目录下的工程及删除install目录
+
+5.make lib_only
+  make lib_clean
+  make lib_install
+单独编译lib目录下所有工程
+
+6.make user_only
+  make user_clean
+  make user_install
+单独编译user目录下所有工程
+
+7.make lib/libdemos_only
+  make lib/libdemos_clean
+  make lib/libdemos_install
+单独编译lib/libdemos工程
+
+8.make user/hello_world_only
+  make user/hello_world_clean
+  make user/hello_world_install
+单独编译user/hello_world工程, 库寻找目录 install/lib，头文件寻找目录 install/include
+
+
+bin执行
+========================================
+1.指定终端的库寻找路径,填写真实路径 export LD_LIBRARY_PATH=xxx/hdprojects/install/lib
+2.bin执行几种方式
+  1) hdprojects/install/bin目录下 ./hello_world
+  2) 代码目录下 hdprojects/user/hello_world， ./hello_world
+
+
+增加自己的工程(lib或user目录下, 已user目录举例)：
+========================================
+1. hdprojects/user/加入工程目录test
+2. hdprojects/user/Makefile 增加
+   USER_DIRS += test
+3. hdprojects/user/test/Makefile需要支持3个伪目标
+   all, install, clean
+4. 编译
+   make user/test_only
+   make user/test_clean
+   make user/test_install
+
+
+删除工程(lib或user目录下, 已user/test目录举例)：
+========================================
+1. 删除hdprojects/user/test目录
+2. hdprojects/user/Makefile 修改删除下面语句
+   USER_DIRS += test
+
+3.export MALLOC_CHECK_=
+这个条件可以让core_dump的东西不同
+4.memwatch.log如何生成？要运行memwatch才可以
